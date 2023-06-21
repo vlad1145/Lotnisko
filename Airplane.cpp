@@ -119,7 +119,6 @@ void Airplane::land_takeoff() {
         }
         else {
             draw3.lock();
-            // Display();
             drawStatus = 1;
             runwayToUse = Runways::RunwayNumber(runwayNumber(generator));
             while(current_x < terminal_x -20) {
@@ -134,7 +133,6 @@ void Airplane::land_takeoff() {
                     current_x = 45;
                 }
             }
-            //Display();
             airport->reserveRunway(runwayToUse);
             airport->releaseRunway(runwayToUse);
             landed.push_back(airplaneNum);
