@@ -15,12 +15,9 @@ Airport::Airport() {
 
 void Airport::reserveRunway(Runways::RunwayNumber runway)
 {
-   // runwaysMutex.lock();
     unique_lock<mutex> ulk(mtx_sec);
-   // while(sect[runway + 1] && sect[runway - 1])
     while(sect[runway + 1]) section[runway].wait(ulk);
     sect[runway] = true;
-   // runwaysMutex.unlock();
 
     // obtain a seed from the system clock:
     unsigned seed = chrono::system_clock::now().time_since_epoch().count();
@@ -33,11 +30,9 @@ void Airport::reserveRunway(Runways::RunwayNumber runway)
 }
 
 void Airport::releaseRunway(Runways::RunwayNumber runway){
- //   runwaysMutex.lock();
     unique_lock<mutex> ulk(mtx_sec);
     section[runway].notify_one();
     sect[runway] = false;
- //   runwaysMutex.unlock();
 
     // obtain a seed from the system clock:
     unsigned seed = chrono::system_clock::now().time_since_epoch().count();
